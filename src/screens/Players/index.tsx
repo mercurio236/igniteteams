@@ -1,5 +1,5 @@
-import React from 'react';
-import { View } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList } from 'react-native';
 
 import * as S from './styles';
 import { Header } from '@components/Header';
@@ -9,6 +9,9 @@ import { Input } from '@components/Input';
 import { Filter } from '@components/Filter';
 
 export const Players: React.FC = () => {
+  const [team, setTeam] = useState('Time A')
+  const [players, setPlayers] = useState([])
+
   return (
     <S.Container>
       <Header showBackButton />
@@ -23,7 +26,22 @@ export const Players: React.FC = () => {
 
         />
       </S.Form>
-      <Filter title='Time A' />
+      <S.HeaderList>
+        <FlatList
+          data={['Time A', 'Time B']}
+          keyExtractor={item => item}
+          renderItem={({ item }) => (
+            <Filter
+              title={item}
+              isActive={item === team}
+              onPress={() => setTeam(item)}
+            />
+          )}
+          horizontal
+        />
+        <S.NumberOfPlayrs>{players.length}</S.NumberOfPlayrs>
+      </S.HeaderList>
+
     </S.Container>
   )
 }
