@@ -6,6 +6,7 @@ import { Header } from '@components/Header';
 import { Highlight } from '@components/Highlight';
 import { ButtonIcon } from '@components/ButtonIcon';
 import { Input } from '@components/Input';
+import { Filter } from '@components/Filter';
 
 export const Players: React.FC = () => {
   return (
@@ -22,6 +23,7 @@ export const Players: React.FC = () => {
 
         />
       </S.Form>
+      <Filter title='Time A' />
     </S.Container>
   )
 }
