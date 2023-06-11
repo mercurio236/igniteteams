@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigation } from '@react-navigation/native'
 import * as S from './styles'
 
 
@@ -9,11 +10,17 @@ type Props = {
 }
 
 export const Header: React.FC<Props> = ({ showBackButton = false }) => {
+    const navigation = useNavigation()
+
+    function handleGoBack() {
+        navigation.navigate('groups')
+    }
+
     return (
         <S.Container>
             {
                 showBackButton &&
-                <S.BackButton>
+                <S.BackButton onPress={handleGoBack}>
                     <S.BackIcon />
                 </S.BackButton>
             }
