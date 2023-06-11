@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FlatList } from 'react-native';
-import { useRoute } from '@react-navigation/native'
+import { useRoute, useNavigation } from '@react-navigation/native'
 import { Alert, TextInput } from 'react-native'
 
 import * as S from './styles';
@@ -18,6 +18,7 @@ import { playersGetByGroup } from '@storage/players/playersGetByGroup';
 import { playerGetByGroupAndTeam } from '@storage/players/playerGetByGroupAndTeam';
 import { PlayerStorageDTO } from '@storage/players/PlayerStorageDTO';
 import { playerRemoveByGroup } from '@storage/players/playerRemoveByGroup';
+import { groupRemoveByName } from '@storage/group/groupRemoveByName';
 
 type RouteParams = {
   group: string;
@@ -29,6 +30,7 @@ export const Players: React.FC = () => {
   const [players, setPlayers] = useState<PlayerStorageDTO[]>([])
 
   const route = useRoute()
+  const navigation = useNavigation()
   const { group } = route.params as RouteParams
 
   const newPlayerNameInputRef = useRef<TextInput>(null)
@@ -72,13 +74,29 @@ export const Players: React.FC = () => {
     }
   }
 
-  async function handleRemovePlayer(playerName:string){
-    try{
+  async function handleRemovePlayer(playerName: string) {
+    try {
       await playerRemoveByGroup(playerName, group)
       fetchPlayersByTeam()
-    }catch(error){
+    } catch (error) {
       Alert.alert('Remover pessoa', 'Não foi possível remover essa pessoa')
     }
+  }
+
+  async function groupRemove() {
+    try {
+      await groupRemoveByName(group)
+      navigation.navigate('groups')
+    } catch (error) {
+      Alert.alert('Remover grupo', 'Não foi possivel remover o grupo')
+    }
+  }
+
+  async function handleGroupRemove() {
+    Alert.alert('Remover', 'Deseja remover o grupo', [
+      { text: 'Não', style: 'cancel' },
+      { text: 'Sim', onPress: () => groupRemove() }
+    ])
   }
 
   useEffect(() => {
@@ -138,7 +156,7 @@ export const Players: React.FC = () => {
       <Button
         title='Remover Turma'
         type='SECUNDARY'
-
+        onPress={handleGroupRemove}
       />
 
     </S.Container>
