@@ -89,6 +89,8 @@ export const Players: React.FC = () => {
           autoCorrect={false}
           onChangeText={setNewPlayerName}
           value={newPlayerName}
+          onSubmitEditing={handleAddPlayer}
+          returnKeyType='done'
         />
         <ButtonIcon
           icon='add'
