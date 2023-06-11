@@ -11,7 +11,7 @@ type Props = TouchableOpacityProps & {
 
 export const ButtonIcon: React.FC<Props> = ({ icon, type = 'PRIMARY', ...rest }) => {
     return (
-        <S.Container>
+        <S.Container {...rest}>
             <S.Icon
                 name={icon}
                 type={type}
