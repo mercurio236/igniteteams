@@ -74,9 +74,10 @@ export const Players: React.FC = () => {
       const playersByTeam = await playerGetByGroupAndTeam(group, team)
       setPlayers(playersByTeam)
 
-      setIsLoading(false)
     } catch (error) {
       Alert.alert('Pessoas', 'Não foi possivel carregar as pessoas filtradas')
+    } finally {
+      setIsLoading(false)
     }
   }
 

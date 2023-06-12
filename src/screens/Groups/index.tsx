@@ -28,10 +28,11 @@ export const Groups: React.FC = () => {
 
       const data = await groupGetAll()
       setGroups(data)
-
-      setIsLoading(false)
+      
     } catch (error) {
       console.log(error)
+    } finally{
+      setIsLoading(false)
     }
   }
 
